@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valencia — Aprueba tu Examen de QO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --ink: #1a1a18;
+      --muted: #7a7970;
+      --accent: #2d5a8e;
+      --accent-light: #e8eef5;
+      --rule: #dddcd7;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      animation: fadeDown .5s ease both;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      letter-spacing: -.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); font-style: italic; }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: .8rem; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.cta-link { color: var(--accent); }
+    .nav-links a.cta-link:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 760px; margin: 0 auto;
+      padding: 7rem 2rem 5rem;
+      animation: fadeUp .7s .1s ease both;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: .72rem; font-weight: 300;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--muted); }
+    .hero p {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 520px; margin-bottom: 2.4rem;
+    }
+
+    .btn {
+      display: inline-block;
+      font-size: .78rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; text-decoration: none;
+      padding: .75rem 1.6rem;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      transition: background .2s, color .2s;
+    }
+    .btn:hover { background: var(--ink); color: var(--bg); }
+
+    /* ── DIVIDER ── */
+    .section-rule {
+      max-width: 1100px; margin: 0 auto;
+      border: none; border-top: 1px solid var(--rule);
+    }
+
+    /* ── FEATURED ── */
+    .featured {
+      max-width: 1100px; margin: 0 auto;
+      padding: 4rem 2rem;
+      animation: fadeUp .7s .25s ease both;
+    }
+    .section-label {
+      font-family: var(--mono);
+      font-size: .68rem; font-weight: 300;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 2.5rem;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+
+    .post-card {
+      padding: 2rem 2rem 2rem 0;
+      border-right: 1px solid var(--rule);
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .post-card:last-child { border-right: none; padding-right: 0; }
+    .post-card:not(:first-child) { padding-left: 2rem; }
+    .post-card:hover .post-title { color: var(--accent); }
+
+    .post-tag {
+      font-family: var(--mono);
+      font-size: .65rem; font-weight: 400;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      display: inline-block;
+      padding: .2rem .55rem;
+      margin-bottom: 1rem;
+    }
+
+    .post-title {
+      font-family: var(--serif);
+      font-size: 1.35rem; line-height: 1.25;
+      margin-bottom: .75rem;
+      transition: color .2s;
+    }
+
+    .post-excerpt {
+      font-size: .88rem; color: var(--muted);
+      line-height: 1.65; margin-bottom: 1.25rem;
+    }
+
+    .post-meta {
+      font-family: var(--mono);
+      font-size: .68rem; color: var(--muted);
+      letter-spacing: .06em;
+    }
+
+    /* ── FORMULA STRIP ── */
+    .formula-strip {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 3rem 2rem;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .formula-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 60px,
+        rgba(255,255,255,.03) 60px, rgba(255,255,255,.03) 61px
+      );
+    }
+    .formula-strip p {
+      font-family: var(--mono);
+      font-size: clamp(.8rem, 2vw, 1rem);
+      letter-spacing: .18em;
+      color: rgba(255,255,255,.35);
+      position: relative;
+    }
+    .formula-strip p strong {
+      color: rgba(255,255,255,.75);
+      font-weight: 400;
+    }
+
+    /* ── PRACTICE CTA ── */
+    .practice-cta {
+      background: var(--accent-light);
+      padding: 6rem 2rem;
+      animation: fadeUp .7s .3s ease both;
+    }
+    .practice-cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cta-icon {
+      display: block;
+      margin: 0 auto 2rem;
+      width: 320px;
+      max-width: 100%;
+      height: auto;
+    }
+    .practice-cta .hero-eyebrow {
+      margin-bottom: 1.2rem;
+    }
+    .practice-cta-headline {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1.2rem;
+    }
+    .practice-cta-headline em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .practice-cta-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 540px;
+      margin: 0 auto 1.75rem;
+    }
+    .cta-stats {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(45, 90, 142, 0.15);
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-stat {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .cta-stat strong {
+      color: var(--accent);
+      font-weight: 400;
+      margin-right: .25rem;
+    }
+    .practice-cta .btn {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .practice-cta .btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* ── RECENT POSTS ── */
+    .recent {
+      max-width: 1100px; margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .recent-list { list-style: none; }
+    .recent-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: start;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--rule);
+      cursor: pointer;
+    }
+    .recent-item:hover .recent-title { color: var(--accent); }
+
+    .recent-num {
+      font-family: var(--mono);
+      font-size: .72rem; color: var(--muted);
+      padding-top: .25rem;
+      letter-spacing: .08em;
+    }
+
+    .recent-title {
+      font-family: var(--serif);
+      font-size: 1.2rem; line-height: 1.3;
+      margin-bottom: .3rem;
+      transition: color .2s;
+    }
+    .recent-sub {
+      font-size: .82rem; color: var(--muted);
+    }
+    .recent-tag {
+      font-family: var(--mono);
+      font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--accent); padding-top: .3rem;
+      white-space: nowrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 100%;
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: .68rem; color: var(--muted);
+      letter-spacing: .06em;
+    }
+    .footer-links { display: flex; gap: 1.6rem; }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      .featured-grid { grid-template-columns: 1fr; }
+      .post-card { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.6rem 0 !important; }
+      .recent-item { grid-template-columns: 50px 1fr; }
+      .recent-tag { display: none; }
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1.1rem; }
+      .practice-cta { padding: 4rem 1.5rem; }
+      .cta-stats { gap: 1.25rem; }
+      footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Valen<span>cia</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Guías de Estudio</a></li>
+      <li><a href="#">Reacciones</a></li>
+      <li><a href="#">Mecanismos</a></li>
+      <li><a href="ejercicios.html" class="cta-link">Ejercicios</a></li>
+      <li><a href="#">Acerca de</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">Química Orgánica, Simplificada</p>
+    <h1>Estudia con inteligencia,<br><em>no con esfuerzo.</em></h1>
+    <p>Valencia desglosa los conceptos de química orgánica, mecanismos y estrategias de examen para que puedas entrar a tu próxima prueba con confianza — no con pánico.</p>
+    <a href="#" class="btn">Ver todas las guías</a>
+  </section>
+
+  <hr class="section-rule" />
+
+  <section class="featured">
+    <p class="section-label">Destacados</p>
+    <div class="featured-grid">
+
+      <article class="post-card">
+        <span class="post-tag">Mecanismos</span>
+        <h2 class="post-title">SN1 vs SN2: Cómo No Confundirlos Nunca Más</h2>
+        <p class="post-excerpt">Sustrato, disolvente, fuerza del nucleófilo — domina los cuatro factores y siempre identificarás el mecanismo correcto, incluso en preguntas difíciles.</p>
+        <p class="post-meta">14 may 2026 · 8 min de lectura</p>
+      </article>
+
+      <article class="post-card">
+        <span class="post-tag">Estereoquímica</span>
+        <h2 class="post-title">Configuración R/S Sin Dolor de Cabeza</h2>
+        <p class="post-excerpt">Las reglas de prioridad CIP confunden a casi todos los estudiantes. Aquí hay un método visual paso a paso que funciona siempre — incluyendo el truco de cuña y raya.</p>
+        <p class="post-meta">6 may 2026 · 11 min de lectura</p>
+      </article>
+
+      <article class="post-card">
+        <span class="post-tag">Estrategia de Examen</span>
+        <h2 class="post-title">Cómo Estudiar de Verdad para un Examen de QO</h2>
+        <p class="post-excerpt">Las tarjetas de memoria solas no son suficientes. Los estudiantes que sobresalen en QO practican mecanismos como un deporte — aquí está el sistema que funciona.</p>
+        <p class="post-meta">28 abr 2026 · 6 min de lectura</p>
+      </article>
+
+    </div>
+  </section>
+
+  <div class="formula-strip">
+    <p>
+      <strong>SN1 · SN2 · E1 · E2</strong>
+      &nbsp;·&nbsp; <strong>Regla de Markovnikov</strong>
+      &nbsp;·&nbsp; <strong>Reactivos de Grignard</strong>
+      &nbsp;·&nbsp; <strong>Condensación Aldólica</strong>
+      &nbsp;·&nbsp; <strong>Esterificación de Fischer</strong>
+    </p>
+  </div>
+
+  <section class="practice-cta">
+    <div class="practice-cta-inner">
+      <svg class="cta-icon" viewBox="0 0 320 60" aria-hidden="true">
+        <!-- hexagon (cyclohexene) -->
+        <polygon points="20,30 33,15 53,15 66,30 53,45 33,45" fill="none" stroke="#2d5a8e" stroke-width="1.5"/>
+        <line x1="36" y1="20" x2="50" y2="20" stroke="#2d5a8e" stroke-width="1.5"/>
+        <!-- arrow -->
+        <line x1="100" y1="30" x2="195" y2="30" stroke="#2d5a8e" stroke-width="1.5"/>
+        <polyline points="190,25 200,30 190,35" fill="none" stroke="#2d5a8e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- conditions above arrow -->
+        <text x="147" y="22" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" fill="#2d5a8e" font-weight="500">Br₂ / CCl₄</text>
+        <!-- question mark -->
+        <text x="245" y="42" font-family="DM Serif Display, serif" font-size="32" fill="#2d5a8e" font-style="italic">?</text>
+      </svg>
+
+      <p class="hero-eyebrow">Práctica Interactiva</p>
+      <h2 class="practice-cta-headline">Predice <em>200+</em> reacciones</h2>
+      <p class="practice-cta-desc">Selección múltiple con estructuras esqueletales reales. Incluye síntesis multi-etapa, retroalimentación inmediata, y mecanismo paso a paso para cada respuesta.</p>
+
+      <div class="cta-stats">
+        <span class="cta-stat"><strong>+50</strong>sustratos</span>
+        <span class="cta-stat"><strong>+200</strong>ejercicios</span>
+        <span class="cta-stat"><strong>14</strong>síntesis multi-etapa</span>
+      </div>
+
+      <a href="ejercicios.html" class="btn">Empezar a practicar →</a>
+    </div>
+  </section>
+
+  <section class="recent">
+    <p class="section-label">Publicaciones Recientes</p>
+    <ul class="recent-list">
+
+      <li class="recent-item">
+        <span class="recent-num">01</span>
+        <div>
+          <h3 class="recent-title">Notación de Flechas Curvas: Guía Completa para Principiantes</h3>
+          <p class="recent-sub">18 may 2026 · 5 min de lectura</p>
+        </div>
+        <span class="recent-tag">Mecanismos</span>
+      </li>
+
+      <li class="recent-item">
+        <span class="recent-num">02</span>
+        <div>
+          <h3 class="recent-title">Todas las Reacciones de Carbonilo que Necesitas para Orgo 2</h3>
+          <p class="recent-sub">12 may 2026 · 9 min de lectura</p>
+        </div>
+        <span class="recent-tag">Reacciones</span>
+      </li>
+
+      <li class="recent-item">
+        <span class="recent-num">03</span>
+        <div>
+          <h3 class="recent-title">Cómo Leer una Proyección de Newman (Sin Marearse)</h3>
+          <p class="recent-sub">4 may 2026 · 7 min de lectura</p>
+        </div>
+        <span class="recent-tag">Estereoquímica</span>
+      </li>
+
+      <li class="recent-item">
+        <span class="recent-num">04</span>
+        <div>
+          <h3 class="recent-title">Aromaticidad: La Regla de Hückel Explicada de Forma Sencilla</h3>
+          <p class="recent-sub">22 abr 2026 · 10 min de lectura</p>
+        </div>
+        <span class="recent-tag">Conceptos</span>
+      </li>
+
+      <li class="recent-item">
+        <span class="recent-num">05</span>
+        <div>
+          <h3 class="recent-title">La Hoja de Repaso de QO para la Noche Antes del Examen</h3>
+          <p class="recent-sub">15 abr 2026 · 6 min de lectura</p>
+        </div>
+        <span class="recent-tag">Estrategia</span>
+      </li>
+
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2026 Valencia</p>
+    <nav class="footer-links">
+      <a href="#">Twitter</a>
+      <a href="#">RSS</a>
+      <a href="#">Boletín</a>
+      <a href="#">Contacto</a>
+    </nav>
+  </footer>
+
+</body>
+</html>
